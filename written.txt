@@ -1,5 +1,14 @@
 ﻿Q3. What happens to the bounding boxes with update + fullRefit?
 
+The tree's structure never changes, so as circles dirft apart the internal boxes stretch to keep covering the children that are now far from each other.
+The boxes get bigger and overlap more over time which makes the tree less effective and it makes the traversal slower.
+
 Q4. What happens with reset (rebuild every frame) instead?
 
+Rebuilding every frame keeps the boxes tight with little overlap, so the boxes jump around as the grouping changes.
+Each frame costs a full build instead of a cheap refit, but the tracing stays fast because the tree is always a good fit.
+
 Q5. Why are some circles drawn with their sides cut off?
+
+Circle centres are placed anywhere from 0 to the screen width/height, so circles near the border extend past the edge of the window and the part outside isn't drawn.
+Circles that overlap will also hide each other, depending on which one the BVH visits last. 
